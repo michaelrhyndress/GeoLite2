@@ -19,8 +19,14 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY GeoIP.conf /etc/GeoIP.conf
+
 #create cronjob
-# COPY scripts/update.sh /etc/cron.daily
+# Copy hello-cron file to the cron.d directory
+COPY ./cron/update-db /etc/cron.d/update-db 
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/update-db 
+# Apply cron job
+RUN crontab /etc/cron.d/update-db
 
 # Init api
 WORKDIR ./usr/src/app
@@ -31,4 +37,3 @@ RUN chmod +x ./entrypoint.sh
 
 EXPOSE 8081
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["cron"]
