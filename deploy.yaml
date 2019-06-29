@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deploy
+  labels:
+    app: server-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: server-deploy
+  template:
+    metadata:
+      labels:
+        app: server-deploy
+    spec:
+      containers:
+      - name: server-deploy
+        image: mrhyndress/geoip2-server:latest
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-deploy
+  template:
+    metadata:
+      labels:
+        app: web-deploy
+    spec:
+      containers:
+      - name: client
+        image: mrhyndress/geoip2-client:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: web-deploy
+  name: web-service
+  namespace: default
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+  selector:
+    app: web-deploy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: server-deploy
+  name: server-service
+  namespace: default
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8081
+  selector:
+    app: server-deploy

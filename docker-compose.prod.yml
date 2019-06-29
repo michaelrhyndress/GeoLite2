@@ -3,16 +3,25 @@ services:
   web:
       restart: always
       build:
+          context: ./client
           dockerfile: Dockerfile
-      volumes: []
-      environment:
-          DEBUG: 'false'
-          ENV: 'PRODUCTION'
-  tests: {}
+      ports:
+        - "80:80"
+      volumes:
+        - /usr/src/app/node_modules
+        - ./client:/usr/src/app
+  tests:
+      build:
+          context: ./client
+          dockerfile: Dockerfile
+      volumes:
+        - /usr/src/app/node_modules
+        - ./client:/usr/src/app
+      command: ["npm", "run", "test"]
   server:
       restart: always
       build:
+          context: ./server
           dockerfile: Dockerfile
-      environment:
-          DEBUG: 'false'
-          ENV: 'PRODUCTION'
+      ports:
+        - "8081:8081"
