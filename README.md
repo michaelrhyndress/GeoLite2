@@ -27,8 +27,10 @@ The client utilizes the default React testing framework that runs when running d
   
 The backend api can be tested by running docker-compose to start a local server and executing:  
     ```
-    npm install mocha -g  
+    npm install mocha -g
+
     cd ./server  
+
     mocha
     ```
 
