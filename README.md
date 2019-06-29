@@ -11,7 +11,7 @@ DEV
 -------
 
 To run everything:  
-    DEV:
+    DEV: 
         `docker-compose -f docker-compose.yml up --build -d`  
     PROD:
         `docker-compose -f docker-compose.prod.yml up --build -d`  
@@ -28,9 +28,10 @@ TESTING
 The client utilizes the default React testing framework that runs when running docker-compose. The results can be found in the console upon starting the container.  
   
 The backend api can be tested by running docker-compose to start a local server and executing:  
-    ```npm install mocha -g   
+    
+    npm install mocha -g     
     cd ./server  
-    mocha   ```
+    mocha  
 
 
 Deploy
