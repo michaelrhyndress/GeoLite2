@@ -26,17 +26,16 @@ TESTING
 The client utilizes the default React testing framework that runs when running docker-compose. The results can be found in the console upon starting the container.  
   
 The backend api can be tested by running docker-compose to start a local server and executing:  
-        ```
-        npm install mocha -g  
-        cd ./server  
-        mocha
-        ```
+    ```
+    npm install mocha -g  
+    cd ./server  
+    mocha
+    ```
 
 
 Deploy
 -------
     
-    ```
     docker build -t mrhyndress/geoip2-client:latest ./client  
     docker push mrhyndress/geoip2-client:latest  
   
@@ -44,7 +43,6 @@ Deploy
     docker push mrhyndress/geoip2-server:latest  
   
     kubectl apply -f deploy.yaml
-    ```
 
 Usage
 -------
