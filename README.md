@@ -11,28 +11,26 @@ DEV
 -------
 
 To run everything:  
-    (DEV) `docker-compose -f docker-compose.yml up --build -d`  
-    (PROD) `docker-compose -f docker-compose.prod.yml up --build -d`  
+    DEV:
+        `docker-compose -f docker-compose.yml up --build -d`  
+    PROD:
+        `docker-compose -f docker-compose.prod.yml up --build -d`  
   
 To run a specific container:  
-    ```
+    `
     cd ./client  
     docker build -f Dockerfile.dev -t client-dev .  
     docker run -p 80:80 client-dev
-    ```
+    `
 
 TESTING
 -------
 The client utilizes the default React testing framework that runs when running docker-compose. The results can be found in the console upon starting the container.  
   
 The backend api can be tested by running docker-compose to start a local server and executing:  
-    ```
-    npm install mocha -g
-
+    ```npm install mocha -g   
     cd ./server  
-
-    mocha
-    ```
+    mocha   ```
 
 
 Deploy
@@ -58,10 +56,9 @@ Troubleshooting
 -------
 
 IF:  
-    ```Bind for 0.0.0.0:80 failed: port is already allocated.```
+    `Bind for 0.0.0.0:80 failed: port is already allocated.`   
 THEN:  
-    ```
-    kubectl delete all --all  
+    
+    kubectl delete all --all
     docker stop $(docker ps -aq)  
     docker rm $(docker ps -aq)
-    ```
